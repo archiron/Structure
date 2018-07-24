@@ -10,7 +10,7 @@ import datetime
 now = datetime.datetime.now()
 newDirName = now.strftime("%Y_%m_%d-%Hh%Mmn%Ss")
 print newDirName
-# VERSION 0.0.0.3
+versionText = "VERSION 0.0.0.4"
 
 from optparse import OptionParser
 import sys
@@ -71,7 +71,9 @@ if __name__ == '__main__':
 
     for file in filesList:
         print("main : %s" % file)
+        tmpName = file.split(".")[0] + '_tmp.py'
         f = open(file, 'r')
+        f_tmp = open(tmpName, 'w')
         for line in f:
             if ( len(line) == 1 ): # len == 0, empty line
 #                print("empty line")
@@ -79,6 +81,8 @@ if __name__ == '__main__':
             else: # len <> 0
 #                print line
                 cnt_lines +=1
+                f_tmp.write(line)
+        f_tmp.close()
         f.close()
     cnt_total_lines = cnt_empty_lines + cnt_lines
     print("there is %d lines" % cnt_total_lines)
