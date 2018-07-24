@@ -10,7 +10,7 @@ import datetime
 now = datetime.datetime.now()
 newDirName = now.strftime("%Y_%m_%d-%Hh%Mmn%Ss")
 print newDirName
-# VERSION 0.0.0.2
+# VERSION 0.0.0.3
 
 from optparse import OptionParser
 import sys
