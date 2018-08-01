@@ -10,7 +10,8 @@ import datetime
 now = datetime.datetime.now()
 newDirName = now.strftime("%Y_%m_%d-%Hh%Mmn%Ss")
 print newDirName
-versionText = "VERSION 0.0.0.4"
+versionText = "VERSION 0.0.0.5"
+someText =  "\#" # rien
 
 from optparse import OptionParser
 import sys
@@ -62,11 +63,20 @@ def getFilesList():
         sys.exit(1)
     return tempList
 
+def isCommentedLine(line):
+    cl = False
+    tmp = line.lstrip()
+    if ( tmp[:1] == '#' ):
+        cl = True
+        #print "***", tmp
+    return cl
+
 if __name__ == '__main__':
     filesList = getFilesList()
 
     cnt_empty_lines = 0
     cnt_lines = 0
+    cnt_commented_lines = 0
     cnt_total_lines = 0
 
     for file in filesList:
@@ -80,13 +90,17 @@ if __name__ == '__main__':
                 cnt_empty_lines += 1
             else: # len <> 0
 #                print line
-                cnt_lines +=1
-                f_tmp.write(line)
+                if isCommentedLine(line):
+                    cnt_commented_lines +=1
+                else: # not a commented line
+                    cnt_lines +=1
+                    f_tmp.write(line)
         f_tmp.close()
         f.close()
     cnt_total_lines = cnt_empty_lines + cnt_lines
     print("there is %d lines" % cnt_total_lines)
     print("there is %d full lines" % cnt_lines)
     print("there is %d empty lines" % cnt_empty_lines)
+    print("there is %d commented lines" % cnt_commented_lines)
     print("fin")
 
